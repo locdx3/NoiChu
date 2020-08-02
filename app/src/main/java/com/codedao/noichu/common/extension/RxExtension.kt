@@ -85,3 +85,37 @@ private fun <T> Maybe<T>.applyScheduler(scheduler: Scheduler) =
 enum class LOADING {
     START, END
 }
+fun Disposable.addToCompositeDisposable(compositeDisposable: CompositeDisposable) {
+    compositeDisposable.add(this)
+}
+
+fun <T> schedulersTransformer(): ObservableTransformer<T, T> {
+    return ObservableTransformer { observable ->
+        observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    }
+}
+
+fun <T> schedulersFlowableTransformer(): FlowableTransformer<T, T> {
+    return FlowableTransformer {
+        it.unsubscribeOn(Schedulers.newThread())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+}
+
+fun applySchedulers(): CompletableTransformer {
+    return CompletableTransformer { upstream ->
+        upstream
+            .unsubscribeOn(Schedulers.newThread())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+}
+
+fun <T> ObservableEmitter<T>.checkDisposed(): ObservableEmitter<T>? {
+    return if (this.isDisposed) {
+        null
+    } else {
+        this
+    }
+}
