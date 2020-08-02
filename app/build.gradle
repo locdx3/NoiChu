@@ -15,7 +15,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.fsoc.template"
+        applicationId "com.codedao.noichu"
         minSdkVersion 15
         targetSdkVersion 29
         versionCode 1
@@ -49,24 +49,15 @@ android {
             dimension "env"
             //versionNameSuffix "-DEVELOP"
             applicationIdSuffix ".dev"
-            resValue "string", "app_name", "Template DEV"
+            resValue "string", "app_name", "Noi Chu DEV"
 
 //            buildConfigField "String", "BASE_URL", "\"https://google.com/\""
             buildConfigField "String", "BASE_URL", "\"https://t7w8wwiqwj.execute-api.ap-northeast-1.amazonaws.com/Prod/\""
         }
 
-        staging {
-            dimension "env"
-            versionNameSuffix "-STAGING"
-            applicationIdSuffix ".stg"
-            resValue "string", "app_name", "Template STG"
-
-            buildConfigField "String", "BASE_URL", "\"https://google.com/\""
-        }
-
         production {
             dimension "env"
-            resValue "string", "app_name", "Template"
+            resValue "string", "app_name", "Noi Chu"
 
             buildConfigField "String", "BASE_URL", "\"https://google.com/\""
         }
